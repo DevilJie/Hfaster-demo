@@ -3,6 +3,7 @@ package com.daniuwl.hsj.service.impl;
 import hsj.czy.mybatisframe.exception.MyBatistFrameServiceException;
 import hsj.czy.mybatisframe.service.impl.BaseServiceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daniuwl.hsj.dao.UserInfoDao;
@@ -15,6 +16,12 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo, String> imple
     // 除了最基本的增删改查业务逻辑，也可以根据自己需要，进行扩展
     // 例如：用户登录,用户登录需要接收用户名以及密码参数，
     // 然后根据根据入参来判断当前登录信息是否可用
+
+    @Autowired
+    public void setBaseDao(UserInfoDao baseDao) {
+        // TODO Auto-generated method stub
+        super.setBaseDao(baseDao);
+    }
 
     @Override
     public UserInfo login(String userName, String password) throws MyBatistFrameServiceException {

@@ -21,9 +21,9 @@
 	<!-- 此处使用的是c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://121.40.178.131:3306/chbatisframe-test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeconvertToNull&amp;useCursorFetch=true&amp;defaultFetchSize=1000&amp;useSSL=false" />
-		<property name="user" value="root" />
-		<property name="password" value="daniuwl&amp;123" />
+		<property name="jdbcUrl" value="***" />
+		<property name="user" value="***" />
+		<property name="password" value="***" />
 		<property name="initialPoolSize" value="10" />
 		<property name="minPoolSize" value="10" />
 		<property name="maxPoolSize" value="50" />
