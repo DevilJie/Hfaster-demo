@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       default-lazy-init="true">
+
+	<aop:config />
+	
+	<context:component-scan base-package="com.daniuwl.hsj" />
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://121.40.178.131:3306/chbatisframe-test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeconvertToNull&amp;useCursorFetch=true&amp;defaultFetchSize=1000&amp;useSSL=false" />
+		<property name="user" value="root" />
+		<property name="password" value="daniuwl&amp;123" />
+		<property name="initialPoolSize" value="10" />
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="50" />
+		<property name="maxIdleTime" value="7200" />
+		<property name="acquireIncrement" value="5" />
+		<property name="checkoutTimeout" value="10000" />
+		<property name="maxIdleTimeExcessConnections" value="10" />
+	</bean>
+    
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="springUtil" class="hsj.czy.mybatisframe.util.SpringUtil" lazy-init="false" />
+	<!-- session工厂 -->
+	<!-- 设置数据库工厂为mysql工厂 注：需要设置mysql忽略大小写 -->
+	<bean id="sampleSqlSessionFactory" class="hsj.czy.mybatisframe.core.ChBatisSpringMySqlFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 设置底层表结构 entity包目录 -->
+		<property name="table_scan" value="com.daniuwl.hsj.entity"></property>
+		<!-- 数据表分隔符 例如属性名为 userId 则对应数据库字段为：user_id -->
+		<property name="separator" value="_"></property>
+	</bean>
+
+	<!-- mybatis mapper扫描器 -->
+	<bean class="hsj.czy.mybatisframe.configurer.ChBatisMapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="sampleSqlSessionFactory"></property>
+	</bean>
+	
+</beans>
