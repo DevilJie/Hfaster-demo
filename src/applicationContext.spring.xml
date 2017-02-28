@@ -18,6 +18,7 @@
 	
 	<context:component-scan base-package="com.daniuwl.hsj" />
 	
+	<!-- 此处使用的是c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://121.40.178.131:3306/chbatisframe-test?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeconvertToNull&amp;useCursorFetch=true&amp;defaultFetchSize=1000&amp;useSSL=false" />
@@ -32,18 +33,21 @@
 		<property name="maxIdleTimeExcessConnections" value="10" />
 	</bean>
     
+    <!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- 将Hfaster框架提供的SpringBean管理工具实例化 -->
 	<bean id="springUtil" class="hsj.czy.mybatisframe.util.SpringUtil" lazy-init="false" />
 	<!-- session工厂 -->
-	<!-- 设置数据库工厂为mysql工厂 注：需要设置mysql忽略大小写 -->
+	<!-- 设置数据库工厂为MySQL工厂 注：需要设置MySQL数据库忽略大小写 -->
 	<bean id="sampleSqlSessionFactory" class="hsj.czy.mybatisframe.core.ChBatisSpringMySqlFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- 设置底层表结构 entity包目录 -->
+		<!-- 设置底层表结构 对应实体类目录 -->
 		<property name="table_scan" value="com.daniuwl.hsj.entity"></property>
 		<!-- 数据表分隔符 例如属性名为 userId 则对应数据库字段为：user_id -->
 		<property name="separator" value="_"></property>

@@ -7,7 +7,7 @@ import hsj.czy.mybatisframe.annotation.Table;
  * 
  * @author Administrator 2017年2月7日 下午3:44:19
  */
-@Table(table_name = "user_info")
+@Table
 public class UserInfo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
